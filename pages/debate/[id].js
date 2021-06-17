@@ -3,6 +3,7 @@ import Head from "next/head"
 import { useRouter } from "next/router"
 import { request } from 'graphql-request'
 import useSWR from 'swr'
+import Shell from '../../components/Shell'
 
 const fetcher = (query, variables) => request(`${process.env.NEXT_PUBLIC_API_URL}/graphql`, query, variables)
 
@@ -42,8 +43,15 @@ const Debate = () => {
         return <div>Error</div>
     return (
         <div>
-            Hello:
-            {data&&<div>{data.postOne.title}</div>}
+            <Head>
+                <title>Debate - {data?.postOne?.title}</title>
+                <meta name="description" content="Debate" />
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
+            <Shell title={data?.postOne?.title}>
+                Hello::
+                {data&&<div>{data.postOne.title}</div>}
+            </Shell>
         </div>
     )
 }
