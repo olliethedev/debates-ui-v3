@@ -1,7 +1,8 @@
-import { Fragment } from 'react'
-import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
+import { Fragment, useState } from 'react'
+import { Disclosure, Menu, Transition, Dialog } from '@headlessui/react'
+import {  MenuIcon, XIcon, ExclamationIcon } from '@heroicons/react/outline'
 import { UserIcon } from '@heroicons/react/solid'
+import Modal from './Modal'
 
 const navigation = ['Dashboard']
 const profile = ['Profile', 'History', 'Sign out']
@@ -11,6 +12,7 @@ function classNames(...classes) {
 }
 
 export default function Shell({title, children}) {
+  const [openModal, setOpenModal] = useState(false);
   return (
     <div>
       <Disclosure as="nav" className="bg-gray-800">
@@ -46,15 +48,18 @@ export default function Shell({title, children}) {
                           </a>
                         )
                       )}
+                       <a
+                            href="#"
+                            onClick={()=>setOpenModal(true)}
+                            className="bg-green-600 hover:bg-green-800 text-white px-3 py-2 rounded-md text-sm font-medium"
+                          >
+                            New Debate
+                        </a>
                     </div>
                   </div>
                 </div>
                 <div className="hidden md:block">
                   <div className="ml-4 flex items-center md:ml-6">
-                    <button className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
-                      <span className="sr-only">View notifications</span>
-                      <BellIcon className="h-6 w-6" aria-hidden="true" />
-                    </button>
 
                     {/* Profile dropdown */}
                     <Menu as="div" className="ml-3 relative">
@@ -63,7 +68,7 @@ export default function Shell({title, children}) {
                           <div>
                             <Menu.Button className="max-w-xs bg-gray-800 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                               <span className="sr-only">Open user menu</span>
-                              <div class="rounded-full bg-gray-100 h-10 w-10 flex items-center justify-center">
+                              <div className="rounded-full bg-gray-100 h-10 w-10 flex items-center justify-center">
                                 <UserIcon className="h-6 w-6" aria-hidden="true" />
                               </div>
                             </Menu.Button>
@@ -138,11 +143,18 @@ export default function Shell({title, children}) {
                     </a>
                   )
                 )}
+                <a
+                    href="#"
+                    onClick={()=>setOpenModal(true)}
+                    className="bg-green-600 hover:bg-green-800 text-white block px-3 py-2 rounded-md text-base font-medium"
+                    >
+                    New Debate
+                </a>
               </div>
               <div className="pt-4 pb-3 border-t border-gray-700">
                 <div className="flex items-center px-5">
                   <div className="flex-shrink-0">
-                    <div class="rounded-full bg-gray-100 h-10 w-10 flex items-center justify-center">
+                    <div className="rounded-full bg-gray-100 h-10 w-10 flex items-center justify-center">
                       <UserIcon className="h-6 w-6" aria-hidden="true" />
                     </div>
                   </div>
@@ -150,10 +162,6 @@ export default function Shell({title, children}) {
                     <div className="text-base font-medium leading-none text-white">Tom Cook</div>
                     <div className="text-sm font-medium leading-none text-gray-400">tom@example.com</div>
                   </div>
-                  <button className="ml-auto bg-gray-800 flex-shrink-0 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
-                    <span className="sr-only">View notifications</span>
-                    <BellIcon className="h-6 w-6" aria-hidden="true" />
-                  </button>
                 </div>
                 <div className="mt-3 px-2 space-y-1">
                   {profile.map((item) => (
@@ -184,6 +192,42 @@ export default function Shell({title, children}) {
           </div>
         </div>
       </main>
+      <Modal open={openModal} setOpen={setOpenModal} >
+        <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+            <div className="sm:flex sm:items-start">
+                <div className="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                    <ExclamationIcon className="h-6 w-6 text-red-600" aria-hidden="true" />
+                </div>
+                <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                    <Dialog.Title as="h3" className="text-lg leading-6 font-medium text-gray-900">
+                    Deactivate account
+                    </Dialog.Title>
+                    <div className="mt-2">
+                            <p className="text-sm text-gray-500">
+                                Are you sure you want to deactivate your account? All of your data will be permanently removed.
+                                This action cannot be undone.
+                            </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+            <button
+            type="button"
+            className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
+            onClick={() => setOpenModal(false)}
+            >
+            Deactivate
+            </button>
+            <button
+            type="button"
+            className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+            onClick={() => setOpenModal(false)}
+            >
+            Cancel
+            </button>
+        </div>
+      </Modal>
     </div>
   )
 }
