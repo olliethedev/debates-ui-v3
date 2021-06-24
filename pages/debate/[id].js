@@ -21,7 +21,9 @@ const query = `query GetPost($filter:  FilterFindOnePostInput, $filterMany: Filt
       title,
       content,
       extra {
-        duration
+        duration,
+        possibleOutcomes {_id, name},
+        possibleWinners
       },
       createdAt,
       updatedAt
@@ -34,6 +36,9 @@ const query = `query GetPost($filter:  FilterFindOnePostInput, $filterMany: Filt
         stake,
         title,
         content,
+    	extra {
+          forOutcome
+        },
         createdAt,
         updatedAt
       }
@@ -67,7 +72,7 @@ const Debate = ({initialData}) => {
             </Head>
             <Shell title={data?.postOne?.title}>
                 {data&&<Parent post={data.postOne}/>}
-                {data&&<Children postChildren={data.postChildMany}/>}
+                {data&&<Children postParent={data.postOne} postChildren={data.postChildMany}/>}
             </Shell>
         </div>
     )
