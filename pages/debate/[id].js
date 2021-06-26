@@ -25,6 +25,8 @@ const query = `query GetPost($filter:  FilterFindOnePostInput, $filterMany: Filt
         possibleOutcomes {_id, name},
         possibleWinners
       },
+      outcomeTotals,
+      hourlyStakeAggregate,
       createdAt,
       updatedAt
     }

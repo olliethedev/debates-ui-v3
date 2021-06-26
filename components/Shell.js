@@ -15,7 +15,7 @@ export default function Shell({title, children}) {
   const [openModal, setOpenModal] = useState(false);
   return (
     <div>
-      <Disclosure as="nav" className="bg-gray-800">
+      <Disclosure as="nav" className="bg-gray-800 shadow-md fixed left-0 right-0 z-10">
         {({ open }) => (
           <>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -24,7 +24,7 @@ export default function Shell({title, children}) {
                   <div className="flex-shrink-0">
                     <img
                       className="h-8 w-8"
-                      src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
+                      src="/pudium_icon.png"
                       alt="Workflow"
                     />
                   </div>
@@ -179,17 +179,9 @@ export default function Shell({title, children}) {
           </>
         )}
       </Disclosure>
-
-      <header className="bg-white shadow">
-        <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold text-gray-900">{title}</h1>
-        </div>
-      </header>
       <main>
-        <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-          <div className="px-4 py-6 sm:px-0">
-            {children}
-          </div>
+        <div className="bg-gray-100 px-4 py-6 sm:px-0">
+        {children}
         </div>
       </main>
       <Modal open={openModal} setOpen={setOpenModal} >
